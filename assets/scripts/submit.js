@@ -5,7 +5,11 @@ const userTeste = {
   password: "teste",
 };
 
-localStorage.setItem("users", JSON.stringify(userTeste));
+const users = JSON.parse(localStorage.getItem("users")) || [];
+
+users.push(userTeste);
+
+localStorage.setItem("users", JSON.stringify(users));
 
 document
   .querySelector("#formAuth")
