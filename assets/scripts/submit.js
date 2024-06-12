@@ -5,7 +5,7 @@ const userTeste = {
   password: "teste",
 };
 
-//localStorage.setItem(userTeste.email, JSON.stringify(userTeste));
+localStorage.setItem("users", JSON.stringify(userTeste));
 
 document
   .querySelector("#formAuth")
