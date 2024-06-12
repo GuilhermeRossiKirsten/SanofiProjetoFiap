@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="icon" type="image/x-icon" href="assets/images/hard-disk.png" />
+    <title>Home</title>
+    <link rel="stylesheet" href="assets/styles/style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <button id="mobile_btn">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div id="mobile_menu">
+          <div id="divisor" class="barraLateral">
+            <button class="close-button2">&times;</button>
+
+            <a style="margin-bottom: 20px; align-items: center" href="#"
+              >Home<i
+                style="margin-left: 10px"
+                class="fa-solid fa-house-user"
+              ></i
+            ></a>
+            <a href="#">Avaliação de desempenho </a>
+            <a href="#">Criar Avaliação</a>
+            <a href="#">Vizualização Gerente</a>
+            <a
+              style="margin-bottom: 20px; align-items: center"
+              href="/index.html"
+            >
+              Sair<i
+                style="margin-left: 10px"
+                class="fa-solid fa-right-from-bracket"
+              >
+              </i
+            ></a>
+          </div>
+        </div>
+      </nav>
+
+      <h1><span id="tempo">$Tempo</span>, <span class="user">$User</span></h1>
+    </header>
+    <main>
+      <section class="emoji-section">
+        <h2><span class="user">$User</span>, como está se sentindo?</h2>
+        <div class="emoji-container">
+          <span class="emoji" data-emoji="1">😭</span>
+          <span class="emoji" data-emoji="2">😟</span>
+          <span class="emoji" data-emoji="3">😐</span>
+          <span class="emoji" data-emoji="4">🙂</span>
+          <span class="emoji" data-emoji="5">🤩</span>
+        </div>
+        <textarea
+          placeholder="Fique à vontade para digitar aqui o que você está sentindo, essa é uma informação privada (Opcional)"
+        ></textarea>
+        <button class="submit-button bnt-default">Enviar</button>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; Copyright 2024 F(MRG3). All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="#">Terms and conditions</a>
+        <a href="#">Privacy policy</a>
+        <a href="#">Contact us</a>
+      </nav>
+    </footer>
+  </body>
+  <script src="assets/scripts/selector.js" defer></script>
+  <script src="assets/scripts/time.js" defer></script>
+  <script src="assets/scripts/user.js" defer></script>
+  <script src="assets/scripts/navbar.js" defer></script>
+</html>
