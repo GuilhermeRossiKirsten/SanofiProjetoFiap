@@ -52,12 +52,11 @@ form.addEventListener("submit", function (event) {
   if (
     users.some(
       (user) =>
-        user.name === newUser.name ||
         user.email === newUser.email ||
         user.code === newUser.code
     )
   ) {
-    showModal("Nome, código de funcionário ou email já cadastrado.");
+    showModal("código de funcionário ou email já cadastrado.");
     return;
   }
 

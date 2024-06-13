@@ -52,11 +52,11 @@
         </div>
       </nav>
 
-      <h1><span id="tempo">$Tempo</span>, <span class="user">$User</span></h1>
+      <h1><span id="tempo">$Tempo</span>, <span class="user1">$User</span></h1>
     </header>
     <main>
       <section class="emoji-section">
-        <h2><span class="user">$User</span>, como está se sentindo?</h2>
+        <h2><span class="user1">$User</span>, como está se sentindo?</h2>
         <div class="emoji-container">
           <span class="emoji" data-emoji="1">😭</span>
           <span class="emoji" data-emoji="2">😟</span>
@@ -70,6 +70,43 @@
         <button class="submit-button bnt-default">Enviar</button>
       </section>
     </main>
+
+    <!-- Botão para abrir a modal -->
+
+    <div class="divisorChat">
+      <span></span>
+
+      <button
+        id="openChatModal"
+        style="
+          background: transparent;
+          border: none;
+          display: flex;
+          cursor: pointer;
+          font-weight: 800;
+          font-size: 15px;
+        "
+      >
+        Precisa de ajuda?<img src="./assets/images/chatbot.png" alt="" />
+      </button>
+    </div>
+
+    <!-- Estrutura da modal -->
+    <div id="chatModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2><img src="./assets/images/chatbot.png" alt="" />Chatbot</h2>
+        <div id="chatContainer">
+          <!-- Aqui vai o chat -->
+        </div>
+        <textarea
+          id="chatInput"
+          placeholder="Digite sua mensagem..."
+        ></textarea>
+        <button id="sendChat">Enviar</button>
+      </div>
+    </div>
+
     <footer>
       <p>&copy; Copyright 2024 F(MRG3). All rights reserved.</p>
       <nav class="footer-nav">
@@ -83,4 +120,6 @@
   <script src="assets/scripts/time.js" defer></script>
   <script src="assets/scripts/user.js" defer></script>
   <script src="assets/scripts/navbar.js" defer></script>
+  <script src="assets/scripts/modalChat.js" defer></script>
+  <script src="assets/scripts/chatbot.js" defer></script>
 </html>
