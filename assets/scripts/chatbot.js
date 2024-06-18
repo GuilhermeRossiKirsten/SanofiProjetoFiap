@@ -53,6 +53,7 @@
           );
 
           sendButton.addEventListener("click", async function () {
+
             let userMessage = chatInput.value;
             if (userMessage.trim() !== "") {
               // Exibe a mensagem do usuário
