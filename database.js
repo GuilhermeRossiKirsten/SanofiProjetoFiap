@@ -4,14 +4,16 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-
 const app = express();
 const pool = new Pool({
-  user: "user",
-  host: "localhost",
+  user: "sanofi_owner",
+  host: "ep-square-hall-a525sdjv.us-east-2.aws.neon.tech",
   database: "sanofi",
-  password: "password",
+  password: "FUDC5KN1fzIL",
   port: 5432,
+  ssl: {
+    rejectUnauthorized: false, // This disables SSL certificate verification, useful if you don't have a valid SSL certificate
+  },
 });
 console.log(pool);
 
@@ -52,7 +54,7 @@ app.post("/login", async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    res.json({ username: user.name, code: user.employee_code});
+    res.json({ username: user.name, code: user.employee_code });
     res.status(200);
   } catch (err) {
     console.error(err.message);
@@ -97,11 +99,9 @@ app.get("/user-status/:employee_code", async (req, res) => {
     );
 
     if (result.rows.length === 0) {
-      return res
-        .status(404)
-        .json({
-          message: "Nenhum status encontrado para este código de funcionário.",
-        });
+      return res.status(404).json({
+        message: "Nenhum status encontrado para este código de funcionário.",
+      });
     }
 
     res.json(result.rows[0]);
@@ -110,8 +110,6 @@ app.get("/user-status/:employee_code", async (req, res) => {
     res.status(500).send("Erro no servidor");
   }
 });
-
-
 
 const PORT = 5000;
 app.listen(PORT, () => {

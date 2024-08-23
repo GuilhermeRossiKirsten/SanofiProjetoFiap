@@ -1,0 +1,21 @@
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    employee_code VARCHAR(50) UNIQUE NOT NULL
+);
+
+CREATE TABLE user_status (
+    id SERIAL PRIMARY KEY,
+    employee_code VARCHAR(50) NOT NULL,
+    emotion_state INT CHECK (emotion_state BETWEEN 1 AND 5) NOT NULL,
+	text_emotion VARCHAR(500)
+);
+
+drop table user_status;
+
+truncate table users;
+truncate table user_status;
+
+ALTER TABLE user_status ADD COLUMN created_at TIMESTAMPTZ DEFAULT NOW();
