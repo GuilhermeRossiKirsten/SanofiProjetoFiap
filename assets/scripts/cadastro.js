@@ -7,7 +7,7 @@ const passwordInput = document.querySelector("#password");
 const confirmPasswordInput = document.querySelector("#passwordconfirm");
 
 // Adiciona o evento de envio do formulário
-form.addEventListener("submit", function (event) {
+form.addEventListener("submit", async function (event) {
   event.preventDefault(); // Impede o envio padrão do formulário
 
   // Valida os campos
@@ -41,35 +41,34 @@ form.addEventListener("submit", function (event) {
     return;
   }
 
-  // Carrega a lista de usuários do LocalStorage
-  let users = JSON.parse(localStorage.getItem("users"));
+  try {
+    const response = await fetch("http://localhost:5000/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        password: password,
+        employee_code: code,
+      }),
+    });
 
-  if (!users) {
-    users = [];
+    if (response.status == 201) {
+      showModal("Cadastro realizado com sucesso! redirecionando...");
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 3000);
+
+    } else {
+      const errorData = await response.text();
+      showModal("Erro ao cadastrar: " + errorData);
+    }
+  } catch (error) {
+    showModal("Erro ao conectar ao servidor.");
   }
 
-  // Verifica duplicidade de nome, email ou código
-  if (
-    users.some(
-      (user) =>
-        user.email === newUser.email ||
-        user.code === newUser.code
-    )
-  ) {
-    showModal("código de funcionário ou email já cadastrado.");
-    return;
-  }
-
-  // Adiciona o novo usuário à lista existente
-  users.push(newUser);
-  localStorage.setItem("users", JSON.stringify(users));
-  // Limpa os campos do formulário
-  form.reset();
-
-  showModal("Cadastro realizado com sucesso! redirecionando...");
-  setTimeout(() => {
-    window.location.href = "index.html";
-  }, 3000);
 });
 
 const closeButton = document.querySelector(".close-button1");
