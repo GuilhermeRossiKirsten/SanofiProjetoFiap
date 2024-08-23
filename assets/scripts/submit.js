@@ -1,84 +1,84 @@
-const userTeste = {
-  name: "Guilherme Rossi Kirsten",
-  code: new Date(),
-  email: "teste@teste",
-  password: "teste",
-};
+// Seleciona o formulário e os elementos de entrada
+const form = document.querySelector("#formAuth");
+const emailInput = document.querySelector("#emailInput");
+const passwordInput = document.querySelector("#passwordInput");
 
-const users = JSON.parse(localStorage.getItem("users")) || [];
+// Adiciona o evento de envio do formulário
+form.addEventListener("submit", async function (event) {
+  event.preventDefault(); // Impede o envio padrão do formulário
 
-users.push(userTeste);
+  // Valida os campos
+  const email = emailInput.value.trim();
+  const password = passwordInput.value.trim();
 
-localStorage.setItem("users", JSON.stringify(users));
+  if (email === "" || password === "") {
+    showModal("Por favor, preencha todos os campos.");
+    return;
+  }
 
-document
-  .querySelector("#formAuth")
-  .addEventListener("submit", function (event) {
-    event.preventDefault();
-    const form = document.querySelector("form");
-    const user = {
-      email: form.emailInput.value.trim(),
-      password: form.passwordInput.value.trim(),
-    };
+  try {
+    const response = await fetch("http://localhost:5000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
 
-    if (authUser(user.email, user.password)) {
-      const username = getUserByEmail(user.email);
-      showName(username.name);
-      window.location.href = "home.html";
+    if (response.status == 200) {
+      const data = await response.json();
+
+      // Armazena o token e a data de expiração
+      const expiryTime = new Date().getTime() + 60 * 60 * 1000; // Token expira em 1 hora
+      localStorage.setItem("tokenExpiry", expiryTime);
+
+      console.log("Login bem-sucedido:", data.username);
+      showModal("Login realizado com sucesso! redirecionando...");
+      showName(data.username, data.code);
+
+      setTimeout(() => {
+        window.location.href = "home.html";
+      }, 3000);
     } else {
-      showModal("Email ou senha incorreto");
+      const errorData = await response.json();
+      showModal("Erro ao fazer login: " + errorData.message);
     }
+  } catch (error) {
+    console.error("Erro ao enviar a requisição:", error);
+    showModal("Erro ao conectar ao servidor.");
+  }
+});
 
-    // Função para autenticar o usuário
-    function authUser(email, password) {
-      // Obtém a lista de usuários do LocalStorage
-      const users = JSON.parse(localStorage.getItem("users")) || [];
+// Função para exibir o modal
+function showModal(msg) {
+  const modal = document.getElementById("modal1");
+  const modalMessage = modal.querySelector("p");
+  modalMessage.innerHTML = "";
+  modalMessage.appendChild(document.createTextNode(msg));
+  modal.style.display = "block";
+}
 
-      // Procura o usuário correspondente
-      const user = users.find(
-        (user) => user.email === email && user.password === password
-      );
+// Adiciona eventos para fechar o modal
+const closeButton = document.querySelector(".close-button1");
+const modal1 = document.getElementById("modal1");
 
-      // Retorna verdadeiro se o usuário for encontrado, falso caso contrário
-      return !!user;
-    }
+closeButton.addEventListener("click", () => {
+  modal1.style.display = "none";
+});
 
-    const closeButton = document.querySelector(".close-button1");
+window.addEventListener("click", (event) => {
+  if (event.target === modal1) {
+    modal1.style.display = "none";
+  }
+});
 
-    closeButton.addEventListener("click", () => {
-      modal1.style.display = "none";
-    });
 
-    window.addEventListener("click", (event) => {
-      if (event.target === modal1) {
-        modal1.style.display = "none";
-      }
-    });
-
-    function showModal(msg1) {
-      const modal = document.getElementById("modal1");
-      const modalMessage = modal.querySelector("p");
-      modalMessage.innerHTML = "";
-      modalMessage.appendChild(document.createTextNode(msg1));
-      modal.style.display = "block";
-    }
-
-    function showName(username) {
-      // Cria um objeto apenas com o nome do usuário
-      const currentUser = {
-        name: username,
-      };
-
-      // Armazena o nome do usuário no localStorage
-      localStorage.setItem("currentUser", JSON.stringify(currentUser));
-    }
-
-    // Função para recuperar o usuário pelo email
-    function getUserByEmail(email) {
-      // Obtém a lista de usuários do LocalStorage
-      const users = JSON.parse(localStorage.getItem("users")) || [];
-
-      // Procura o usuário correspondente ao email
-      return users.find((user) => user.email === email);
-    }
-  });
+function showName(username, code) {
+  // Cria um objeto apenas com o nome do usuário
+  const currentUser = {
+    name: username,
+    code: code,
+  };
+  // Armazena o nome do usuário no localStorage
+  localStorage.setItem("currentUser", JSON.stringify(currentUser));
+}
