@@ -1,0 +1,133 @@
+#gerenteSearch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+}
+
+#search {
+  padding: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#searchButton {
+  float: right;
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.searchInput {
+  width: 300px;
+  height: 30px;
+}
+
+/* Estilo do botão de detalhes */
+.details-button {
+  float: right;
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Estilo da caixa de resultados */
+.result-box {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px 0;
+  width: 500px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  position: relative; /* Adicionado para o botão flutuar */
+}
+
+/* Estilo do modal */
+.modal2 {
+  display: none; /* Esconder o modal por padrão */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 100%; /* Ajuste a largura conforme necessário */
+  display: flex; /* Flexbox para alinhar as informações */
+  flex-direction: column;
+  justify-content: space-between; /* Espaça as seções principal e adicional */
+}
+
+/* Estilo da área principal do modal */
+.modal-main-info {
+  flex: 1; /* Ocupa o espaço restante disponível */
+}
+
+/* Estilo da área adicional do modal */
+.modal-additional-info {
+  text-align: left; /* Alinha o texto à direita */
+}
+
+/* Estilo do textarea */
+textarea#modalEmotion {
+  width: 560px; /* Ocupa toda a largura disponível */
+  height: 150px; /* Ajuste a altura conforme necessário */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow-y: auto; /* Permite rolar verticalmente */
+  resize: none; /* Desativa a redimensionamento */
+}
+
+.EstadoModal{
+    display: flex;
+    flex-direction: column;
+}
+
+#modalState{
+    font-size: 50px;
+
+}
+
+Estilo do botão de fechar do modal
+.close3 {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close3:hover,
+.close3:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
