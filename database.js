@@ -111,6 +111,26 @@ app.get("/user-status/:employee_code", async (req, res) => {
   }
 });
 
+app.post("/search", async (req, res) => {
+  const { searchTerm } = req.body;
+  try {
+    const query = `
+      SELECT u.name, u.email, u.employee_code, us.emotion_state, us.text_emotion, us.created_at
+      FROM users u
+      LEFT JOIN user_status us ON u.employee_code = us.employee_code
+      WHERE u.name ILIKE $1 OR u.email ILIKE $1 OR u.employee_code ILIKE $1
+      ORDER BY us.created_at DESC
+    `;
+    const values = [`%${searchTerm}%`];
+    const result = await pool.query(query, values);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erro no servidor");
+  }
+});
+
+
 const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

@@ -42,7 +42,7 @@ form.addEventListener("submit", async function (event) {
   }
 
   try {
-    const response = await fetch("http://localhost:5000/register", {
+    const response = await fetch("https://apisanofi.onrender.com/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

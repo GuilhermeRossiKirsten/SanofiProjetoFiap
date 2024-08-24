@@ -56,21 +56,20 @@
 
       <h1><span id="tempo">$Tempo</span>, <span class="user1">$User</span></h1>
     </header>
-    <main>
-      <section class="emoji-section">
-        <h2><span class="user1">$User</span>, como está se sentindo?</h2>
-        <div class="emoji-container">
-          <span class="emoji" data-emoji="1">😭</span>
-          <span class="emoji" data-emoji="2">😟</span>
-          <span class="emoji" data-emoji="3">😐</span>
-          <span class="emoji" data-emoji="4">🙂</span>
-          <span class="emoji" data-emoji="5">🤩</span>
+
+    <main id="gerenteSearch">
+      <section id="search">
+        <h2>Buscar registros</h2>
+        <div>
+          <input
+            class="searchInput"
+            type="text"
+            id="searchBox"
+            placeholder="Busque por Nome, Email ou ID de funcionário"
+          />
+          <button id="searchButton">Buscar</button>
         </div>
-        <textarea
-          class="emotiontextarea"
-          placeholder="Fique à vontade para digitar aqui o que você está sentindo, essa é uma informação privada (Opcional)"
-        ></textarea>
-        <button class="submit-button bnt-default">Enviar</button>
+        <ul id="results"></ul>
       </section>
     </main>
 
@@ -118,6 +117,33 @@
       </div>
     </div>
 
+        <!-- Modal -->
+    <div id="detailsModal" class="modal2">
+      <div class="modal-content">
+        <span class="close3">&times;</span>
+        <h2>Detalhes</h2>
+        <div class="modal-details">
+          <!-- Informações principais à esquerda -->
+          <div class="modal-main-info">
+            <p id="modalName"></p>
+            <p id="modalEmail"></p>
+            <p id="modalCode"></p>
+            <p id="modalDate"></p>
+          </div>
+          <!-- Informações adicionais à direita -->
+          <div class="modal-additional-info">
+            <div class="EstadoModal">
+              <p>Estado Emocional:    </p>
+              <p id="modalState"></p>
+            </div>
+            <p id="modalEmotionLabel">Comentário:</p>
+            <textarea id="modalEmotion" readonly></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
     <footer>
       <p>&copy; Copyright 2024 F(MRG3). All rights reserved.</p>
       <nav class="footer-nav">
@@ -134,5 +160,5 @@
   <script src="assets/scripts/modalChat.js" defer></script>
   <script src="assets/scripts/chatbot.js" defer></script>
   <script src="assets/scripts/timeout.js" defer></script>
-  <script src="assets/scripts/emotionsData.js" defer></script>
+  <script src="assets/scripts/gerente.js" defer></script>
 </html>
