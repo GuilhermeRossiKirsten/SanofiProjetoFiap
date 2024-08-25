@@ -1,3 +1,4 @@
+/* Estilos gerais */
 #gerenteSearch {
   display: flex;
   align-items: center;
@@ -50,14 +51,14 @@
   width: 500px;
   border-radius: 5px;
   background-color: #f9f9f9;
-  position: relative; /* Adicionado para o botão flutuar */
+  position: relative;
 }
 
 /* Estilo do modal */
 .modal2 {
   display: none; /* Esconder o modal por padrão */
   position: fixed;
-  z-index: 1;
+  z-index: 100000;
   left: 0;
   top: 0;
   width: 100%;
@@ -81,43 +82,41 @@
   padding: 20px;
   border: 1px solid #888;
   width: 100%; /* Ajuste a largura conforme necessário */
-  display: flex; /* Flexbox para alinhar as informações */
+  display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Espaça as seções principal e adicional */
+  justify-content: space-between;
 }
 
 /* Estilo da área principal do modal */
 .modal-main-info {
-  flex: 1; /* Ocupa o espaço restante disponível */
+  flex: 1;
 }
 
 /* Estilo da área adicional do modal */
 .modal-additional-info {
-  text-align: left; /* Alinha o texto à direita */
+  text-align: left;
 }
 
 /* Estilo do textarea */
 textarea#modalEmotion {
-  width: 560px; /* Ocupa toda a largura disponível */
-  height: 150px; /* Ajuste a altura conforme necessário */
+  width: 560px;
+  height: 150px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  overflow-y: auto; /* Permite rolar verticalmente */
-  resize: none; /* Desativa a redimensionamento */
+  overflow-y: auto;
+  resize: none;
 }
 
-.EstadoModal{
-    display: flex;
-    flex-direction: column;
+.EstadoModal {
+  display: flex;
+  flex-direction: column;
 }
 
-#modalState{
-    font-size: 50px;
-
+#modalState {
+  font-size: 50px;
 }
 
-Estilo do botão de fechar do modal
 .close3 {
   color: #aaa;
   float: right;
@@ -130,4 +129,55 @@ Estilo do botão de fechar do modal
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+/* Responsividade para telas de até 768px (tablets) */
+@media (max-width: 768px) {
+  .result-box {
+    width: 90%; /* Ajuste para 90% da largura da tela */
+  }
+
+  textarea#modalEmotion {
+    width: 100%; /* Ajusta para ocupar toda a largura disponível */
+  }
+
+  #modalState {
+    font-size: 40px; /* Ajusta o tamanho da fonte para caber melhor em telas menores */
+  }
+}
+
+/* Responsividade para telas de até 480px (smartphones) */
+@media (max-width: 480px) {
+  #gerenteSearch {
+    flex-direction: column; /* Alinha verticalmente para economizar espaço */
+    padding: 16px;
+  }
+
+  .searchInput {
+    width: 100%; /* Aumenta para ocupar toda a largura da tela */
+  }
+
+  #searchButton, .details-button {
+    width: 100%; /* Botões ocupam toda a largura disponível */
+    margin-left: 0;
+    margin-top: 10px; /* Espaçamento acima do botão */
+  }
+
+  .result-box {
+    width: 100%; /* Caixa de resultados ocupa toda a largura da tela */
+    margin: 5px 0; /* Margem menor entre as caixas */
+  }
+
+  textarea#modalEmotion {
+    width: 100%; /* Ajusta para ocupar toda a largura disponível */
+    height: 120px; /* Reduz a altura para se adaptar a telas menores */
+  }
+
+  #modalState {
+    font-size: 30px; /* Ajuste de fonte para caber em telas menores */
+  }
+
+  .modal-content {
+    width: 90%; /* Reduz a largura do modal em telas menores */
+  }
 }
