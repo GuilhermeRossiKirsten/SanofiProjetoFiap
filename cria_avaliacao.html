@@ -17,7 +17,7 @@
       referrerpolicy="no-referrer"
     />
     <link rel="icon" type="image/x-icon" href="./assets/images/hard-disk.png" />
-    <title>Home</title>
+    <title>Create task</title>
     <link rel="stylesheet" href="./assets/styles/style.css" />
   </head>
   <body>
@@ -30,9 +30,7 @@
           <div id="divisor" class="barraLateral">
             <button class="close-button2">&times;</button>
 
-            <a
-              style="margin-bottom: 10px; align-items: center"
-              href="./home.html"
+            <a style="margin-bottom: 10px; align-items: center" href="./home.html"
               >Home<i
                 style="margin-left: 10px"
                 class="fa-solid fa-house-user"
@@ -56,21 +54,32 @@
 
       <h1><span id="tempo">$Tempo</span>, <span class="user1">$User</span></h1>
     </header>
+    <main>
+      <div class="container">
+        <div class="button-container">
+          <button class="submit-button bnt-default">Criar tarefa</button>
+        </div> 
+        
+        <div class="question-container">
+          <section class="text-section">
+            <h3>Texto 1</h3>
+            <textarea placeholder=""></textarea>
 
-    <main id="gerenteSearch">
-      <section id="search">
-        <h2>Buscar registros</h2>
-        <div>
-          <input
-            class="searchInput"
-            type="text"
-            id="searchBox"
-            placeholder="Busque por Nome, Email ou ID de funcionário"
-          />
-          <button id="searchButton">Buscar</button>
+          </section>
+        
+          <section class="text-section">
+            <h3>Texto 2</h3>
+            <textarea placeholder=""></textarea>
+
+          </section>
+        
+          <section class="text-section">
+            <h3>Texto 3</h3>
+            <textarea placeholder=""></textarea>
+
+          </section>
         </div>
-        <ul id="results"></ul>
-      </section>
+      </div>
     </main>
 
     <!-- Botão para abrir a modal -->
@@ -109,41 +118,6 @@
       </div>
     </div>
 
-    <!-- Modal -->
-    <div id="modal1" class="modal1">
-      <div class="modal-content1">
-        <span class="close-button1">&times;</span>
-        <p id="modal-message1"></p>
-      </div>
-    </div>
-
-        <!-- Modal -->
-    <div id="detailsModal" class="modal2">
-      <div class="modal-content">
-        <span class="close3">&times;</span>
-        <h2>Detalhes</h2>
-        <div class="modal-details">
-          <!-- Informações principais à esquerda -->
-          <div class="modal-main-info">
-            <p id="modalName"></p>
-            <p id="modalEmail"></p>
-            <p id="modalCode"></p>
-            <p id="modalDate"></p>
-          </div>
-          <!-- Informações adicionais à direita -->
-          <div class="modal-additional-info">
-            <div class="EstadoModal">
-              <p>Estado Emocional:    </p>
-              <p id="modalState"></p>
-            </div>
-            <p id="modalEmotionLabel">Comentário:</p>
-            <textarea id="modalEmotion" readonly></textarea>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
     <footer>
       <p>&copy; Copyright 2024 F(MRG3). All rights reserved.</p>
       <nav class="footer-nav">
@@ -159,6 +133,4 @@
   <script src="assets/scripts/navbar.js" defer></script>
   <script src="assets/scripts/modalChat.js" defer></script>
   <script src="assets/scripts/chatbot.js" defer></script>
-  <script src="assets/scripts/timeout.js" defer></script>
-  <script src="assets/scripts/gerente.js" defer></script>
 </html>

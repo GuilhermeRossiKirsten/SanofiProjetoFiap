@@ -2,6 +2,7 @@
 @import url(./home.css);
 @import url(./chatbot.css);
 @import url(./gerente.css);
+@import url(./cria_avaliacao.css);
 
 :root {
   --primary-color: #008c80;
