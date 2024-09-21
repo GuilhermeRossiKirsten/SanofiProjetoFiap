@@ -1,8 +1,8 @@
-const { Pool } = require("pg");
-const cors = require("cors");
-const express = require("express");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+import pkg from "pg";
+const { Pool } = pkg;
+import cors from "cors";
+import express from "express";
+import bcrypt from "bcryptjs";
 
 const app = express();
 const pool = new Pool({
@@ -12,9 +12,10 @@ const pool = new Pool({
   password: "FUDC5KN1fzIL",
   port: 5432,
   ssl: {
-    rejectUnauthorized: false, // This disables SSL certificate verification, useful if you don't have a valid SSL certificate
+    rejectUnauthorized: false,
   },
 });
+
 console.log(pool);
 
 app.use(cors());
@@ -25,14 +26,14 @@ app.post("/register", async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
     const result = await pool.query(
-      "INSERT INTO users (name, email, password, employee_code) VALUES ($1, $2, $3, $4);",
+      "INSERT INTO users (name, email, password, employee_code) VALUES ($1, $2, $3, $4) RETURNING *;",
       [name, email, hashedPassword, employee_code]
     );
     res.status(201).json(result.rows[0]);
-    console.log("cadastro feito");
+    console.log("Cadastro feito");
   } catch (err) {
-    console.error(err.mensage);
-    console.log("erro cadastro");
+    console.error(err.message);
+    console.log("Erro no cadastro");
     res.status(500).send("Server error");
   }
 });
@@ -43,7 +44,7 @@ app.post("/login", async (req, res) => {
     const result = await pool.query("SELECT * FROM users WHERE email = $1", [
       email,
     ]);
-    if (result.rows.length == 0) {
+    if (result.rows.length === 0) {
       return res.status(404).json({ message: "User not found" });
     }
 
@@ -54,8 +55,7 @@ app.post("/login", async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    res.json({ username: user.name, code: user.employee_code });
-    res.status(200);
+    res.json({ username: user.name, code: user.employee_code, id: user.id });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
@@ -79,7 +79,7 @@ app.post("/user-status", async (req, res) => {
 
   try {
     const result = await pool.query(
-      "INSERT INTO user_status (employee_code, emotion_state, text_emotion) VALUES ($1, $2, $3);",
+      "INSERT INTO user_status (employee_code, emotion_state, text_emotion) VALUES ($1, $2, $3) RETURNING *;",
       [employee_code, emotion_state, text_emotion]
     );
     res.status(201).json(result.rows[0]);
@@ -129,6 +129,70 @@ app.post("/search", async (req, res) => {
     res.status(500).send("Erro no servidor");
   }
 });
+
+app.post("/evaluations", async (req, res) => {
+  const { evaluation_name, employees_involved, description, user_id } =
+    req.body;
+
+  if (!evaluation_name || !employees_involved || !description || !user_id) {
+    return res
+      .status(400)
+      .json({ message: "Todos os campos são obrigatórios." });
+  }
+
+  try {
+    const result = await pool.query(
+      `INSERT INTO evaluations (evaluation_name, employees_involved, description, user_id) 
+       VALUES ($1, $2, $3, $4) RETURNING *;`,
+      [evaluation_name, employees_involved, description, user_id]
+    );
+
+    res.status(201).json({ message: "Avaliação criada com sucesso!" });
+  } catch (err) {
+    console.error("Erro ao criar avaliação:", err.message);
+    res.status(500).send("Erro no servidor");
+  }
+});
+
+// Rota para listar todas as avaliações
+app.get("/evaluations", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM evaluations ORDER BY created_at DESC;");
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Nenhuma avaliação encontrada." });
+    }
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Erro no servidor");
+  }
+});
+
+
+// Rota para buscar avaliação pelo nome ou ID do criador
+app.get("/evaluations/search", async (req, res) => {
+  const query = req.query.query; // Recebe o parâmetro de busca
+
+  try {
+    const result = await pool.query(
+      `SELECT * FROM evaluations 
+       WHERE evaluation_name ILIKE $1 OR user_id::text = $1;`,
+      [`%${query}%`] // Usando ILIKE para busca case-insensitive
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Avaliação não encontrada." });
+    }
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Erro no servidor");
+  }
+});
+
 
 
 const PORT = 5000;

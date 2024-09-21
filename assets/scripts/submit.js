@@ -18,6 +18,7 @@ form.addEventListener("submit", async function (event) {
 
   try {
     const response = await fetch("https://apisanofi.onrender.com/login", {
+    //const response = await fetch("http://localhost:5000/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -34,7 +35,7 @@ form.addEventListener("submit", async function (event) {
 
       console.log("Login bem-sucedido:", data.username);
       showModal("Login realizado com sucesso! redirecionando...");
-      showName(data.username, data.code);
+      showName(data.username, data.code, data.id);
 
       setTimeout(() => {
         window.location.href = "home.html";
@@ -72,12 +73,12 @@ window.addEventListener("click", (event) => {
   }
 });
 
-
-function showName(username, code) {
+function showName(username, code, codeId) {
   // Cria um objeto apenas com o nome do usuário
   const currentUser = {
     name: username,
     code: code,
+    codeId: codeId,
   };
   // Armazena o nome do usuário no localStorage
   localStorage.setItem("currentUser", JSON.stringify(currentUser));

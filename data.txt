@@ -13,9 +13,46 @@ CREATE TABLE user_status (
 	text_emotion VARCHAR(500)
 );
 
+CREATE TABLE evaluations (
+    id SERIAL PRIMARY KEY,
+    evaluation_name VARCHAR(255) NOT NULL,
+    creation_date DATE NOT NULL DEFAULT CURRENT_DATE,
+    employees_involved TEXT[] NOT NULL, -- Array de e-mails dos funcionários
+    description TEXT NOT NULL,
+    user_id INT REFERENCES users(id) -- Referência ao avaliador (usuário que criou a avaliação)
+);
+
 drop table user_status;
 
 truncate table users;
 truncate table user_status;
 
 ALTER TABLE user_status ADD COLUMN created_at TIMESTAMPTZ DEFAULT NOW();
+
+
+
+
+// Função para enviar email
+const sendEvaluationEmail = async (employeeEmails, evaluationDetails) => {
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "mrg3.project@gmail.com", // Substitua pelo seu email
+      pass: "mrg3.fiap123321", // Substitua pela sua senha
+    },
+  });
+
+  const mailOptions = {
+    from: "mrg3.project@gmail.com",
+    to: employeeEmails.join(","), // Envia o email para todos os funcionários
+    subject: `Avaliação: ${evaluationDetails.evaluation_name}`,
+    text: evaluationDetails.description,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log('Emails enviados com sucesso');
+  } catch (error) {
+    console.error('Erro ao enviar emails:', error);
+  }
+};

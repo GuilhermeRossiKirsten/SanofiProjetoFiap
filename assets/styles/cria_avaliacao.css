@@ -1,67 +1,55 @@
-
-.question-container {
-    display: flex;
-    justify-content: space-around; 
-    gap: 50px; 
-    padding: 20px; 
-  }
-  
-  .text-section {
-    background-color: #D9D9D9;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 385px; 
-    height: 164px;
-    text-align: center;
+/* Estilo geral para o main */
+.mainAVA {
+  display: grid;
+  margin-top: 20px;
 }
 
-  .text-section h3 {
-    color: #000000;
-    margin-bottom: 20px;
-  }
-    
-  .text-container {
-    display:flex;
-    justify-content:center;
-    margin-bottom: 20px;
-  }
-  
-  textarea {
-    width: 320px;
-    height: 98px;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #D9D9D9;
-    margin-bottom: 30px;
-    resize: none;
-    background-color: #d9d9d9; 
-    }
-  
-    .button-container {
-      text-align:left;
-      margin-top: 20px;
-      margin-left: 20px;
-      flex-direction: column;
-  }
-  
-  .button-container button {
-      background-color: var(--primary-color);
-      color: #fff;
-      padding:15px 84px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 25px;
-  }
-  
-  .button-container button:hover {
-    background-color: #2bc4b7;
-    color: #fff;
-    padding:15px 84px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 25px;
-    transition: background-color 0.3s ease;
-  }
+/* Estilo das seções */
+#createEvaluationSection_unique,
+#searchEvaluationSection_unique,
+#evaluationsListSection_unique {
+  margin-bottom: 30px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+/* Estilo dos rótulos */
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+/* Estilo dos inputs e textarea */
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.buttonAVA {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+/* Estilo da lista de avaliações */
+#evaluationsList_unique {
+  margin-top: 10px;
+}
+
+.evaluation-item {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  background-color: #ffffff;
+}

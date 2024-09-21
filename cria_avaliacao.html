@@ -30,7 +30,9 @@
           <div id="divisor" class="barraLateral">
             <button class="close-button2">&times;</button>
 
-            <a style="margin-bottom: 10px; align-items: center" href="./home.html"
+            <a
+              style="margin-bottom: 10px; align-items: center"
+              href="./home.html"
               >Home<i
                 style="margin-left: 10px"
                 class="fa-solid fa-house-user"
@@ -54,32 +56,65 @@
 
       <h1><span id="tempo">$Tempo</span>, <span class="user1">$User</span></h1>
     </header>
-    <main>
-      <div class="container">
-        <div class="button-container">
-          <button class="submit-button bnt-default">Criar tarefa</button>
-        </div> 
-        
-        <div class="question-container">
-          <section class="text-section">
-            <h3>Texto 1</h3>
-            <textarea placeholder=""></textarea>
+    <main class="mainAVA">
+      <!-- Formulário de Criação de Avaliação -->
+      <section id="createEvaluationSection_unique">
+        <h2>Criar Avaliação</h2>
+        <form id="createEvaluationForm_unique">
+          <label for="evaluation_name_unique">Nome da Avaliação:</label>
+          <input
+            type="text"
+            id="evaluation_name_unique"
+            name="evaluation_name"
+            required
+          />
 
-          </section>
-        
-          <section class="text-section">
-            <h3>Texto 2</h3>
-            <textarea placeholder=""></textarea>
+          <label for="employees_involved_unique"
+            >Emails dos Funcionários (separados por vírgula):</label
+          >
+          <input
+            type="text"
+            id="employees_involved_unique"
+            name="employees_involved"
+            placeholder="funcionario1@empresa.com, funcionario2@empresa.com"
+            required
+          />
 
-          </section>
-        
-          <section class="text-section">
-            <h3>Texto 3</h3>
-            <textarea placeholder=""></textarea>
+          <label for="description_unique">Descrição:</label>
+          <textarea
+            id="description_unique"
+            name="description"
+            rows="4"
+            required
+          ></textarea>
 
-          </section>
+          <button type="submit" class="buttonAVA">Criar Avaliação</button>
+        </form>
+      </section>
+
+      <!-- Formulário de Busca de Avaliação -->
+      <section id="searchEvaluationSection_unique">
+        <h2>Buscar Avaliações</h2>
+        <form id="searchEvaluationForm_unique">
+          <label for="search_term_unique">Buscar por Nome ou Data:</label>
+          <input
+            type="text"
+            id="search_term_unique"
+            name="search_term"
+            placeholder="Digite o termo de busca"
+            required
+          />
+          <button type="submit" class="buttonAVA">Buscar</button>
+        </form>
+      </section>
+
+      <!-- Lista de Avaliações -->
+      <section id="evaluationsListSection_unique">
+        <h2>Lista de Avaliações</h2>
+        <div id="evaluationsList_unique">
+          <!-- Aqui será exibida a lista de avaliações dinamicamente -->
         </div>
-      </div>
+      </section>
     </main>
 
     <!-- Botão para abrir a modal -->
@@ -133,4 +168,7 @@
   <script src="assets/scripts/navbar.js" defer></script>
   <script src="assets/scripts/modalChat.js" defer></script>
   <script src="assets/scripts/chatbot.js" defer></script>
+  <script src="assets/scripts/avaliacao.js" defer></script>
+  <script src="assets/scripts/email.js" defer></script>
+  <script src="https://cdn.emailjs.com/dist/email.min.js" defer></script>
 </html>
