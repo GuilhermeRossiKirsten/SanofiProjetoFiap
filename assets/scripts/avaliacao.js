@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   const evaluationsList = document.getElementById("evaluationsList_unique");
 
-  const BASE_URL = "http://localhost:5000"; // URL do servidor local
+  const BASE_URL = "https://apisanofi.onrender.com"; // URL do servidor local
 
   // Função para criar uma avaliação
   createEvaluationForm.addEventListener("submit", async (event) => {
@@ -91,9 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <p><strong>Data:</strong> ${new Date(
             evaluation.created_at
           ).toLocaleDateString()}</p>
-    <button class="buttonAVA" data-id="${
-      evaluation.id
-    }">Enviar Email</button>
+    <button class="buttonAVA" data-id="${evaluation.id}">Enviar Email</button>
         `;
           evaluationsList.appendChild(evaluationItem);
         });
