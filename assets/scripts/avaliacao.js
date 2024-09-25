@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   const evaluationsList = document.getElementById("evaluationsList_unique");
 
-  //const BASE_URL = "https://apisanofi.onrender.com"; // URL do servidor local
-  const BASE_URL = "http://localhost:5000"; // URL do servidor local
+  const BASE_URL = "https://apisanofi.onrender.com"; // URL do servidor local
+  //const BASE_URL = "http://localhost:5000"; // URL do servidor local
 
   createEvaluationForm.addEventListener("submit", async (event) => {
     event.preventDefault();
