@@ -22,6 +22,13 @@ CREATE TABLE evaluations (
     user_id INT REFERENCES users(id) -- Referência ao avaliador (usuário que criou a avaliação)
 );
 
+-- Criar um tipo ENUM para status
+CREATE TYPE evaluation_status AS ENUM ('CONCLUIDO', 'ANDAMENTO', 'EM ESPERA');
+
+-- Adicionar a coluna usando o tipo ENUM
+ALTER TABLE evaluations
+ADD COLUMN status evaluation_status DEFAULT 'EM ESPERA';
+
 drop table user_status;
 
 truncate table users;

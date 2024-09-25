@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   const evaluationsList = document.getElementById("evaluationsList_unique");
 
-  const BASE_URL = "https://apisanofi.onrender.com"; // URL do servidor local
-  //const BASE_URL = "http://localhost:5000"; // URL do servidor local
+  //const BASE_URL = "https://apisanofi.onrender.com"; // URL do servidor local
+  const BASE_URL = "http://localhost:5000"; // URL do servidor local
 
   createEvaluationForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const evaluations = await response.json();
       evaluationsList.innerHTML = ""; // Limpar a lista anterior
 
-      if (evaluations.rows.length == 0) {
+      if (evaluations.length === 0) {
         evaluationsList.innerHTML = "<p>Nenhuma avaliação encontrada.</p>";
       } else {
         evaluations.forEach(async (evaluation) => {
@@ -95,17 +95,65 @@ document.addEventListener("DOMContentLoaded", () => {
           const userId = await response2.json();
           evaluationItem.classList.add("evaluation-item");
           evaluationItem.innerHTML = `
-          <p><strong>Criado por</strong> ${userId.name}</p>
-          <p><strong>Data:</strong> ${new Date(
-            evaluation.created_at
-          ).toLocaleDateString()}</p>
-          <h3>${evaluation.evaluation_name}</h3>
-            <p><strong>ID: </strong> ${evaluation.id}
-            <p><strong>Funcionários:</strong> ${evaluation.employees_involved.join(
+            <p><strong class="leftID">ID: ${evaluation.id} </strong></p>
+            <p><strong>Criado por</strong> ${userId.name}</p>
+            <p><strong>Data de Criação:</strong> ${new Date(
+              evaluation.created_at
+            ).toLocaleDateString()}</p>
+            </br>
+            <h3>${evaluation.evaluation_name}</h3>
+            <p><strong>Agendado para </strong>${new Date(
+              evaluation.scheduled_date
+            ).toLocaleDateString()}</p>
+            </br>
+            
+            <p><strong>Status: ${evaluation.status}</strong></p>
+            </br>
+
+            </div>
+            <p id="modalEmotionLabel">Funcionários:</p>
+            <textarea id="modalAVALabel" readonly>${evaluation.employees_involved.join(
               ", "
-            )}</p>
-            <p><strong>Descrição:</strong> ${evaluation.description}</p>
-    <button class="buttonAVA" data-id="${evaluation.id}">Enviar Email</button>
+            )}</textarea>
+            </div>
+            </div>
+            <p id="modalEmotionLabel">Descrição:</p>
+            <textarea id="modalAVALabel" readonly>${
+              evaluation.description
+            }</textarea>
+            </div>
+            </br>
+            <button class="buttonAVA" data-id="${
+              evaluation.id
+            }">Enviar Email</button>
+
+
+            <button class="buttonAVA" data-id="${
+              evaluation.id
+            }" onclick="trocaStatus('CONCLUIDO', '${
+            evaluation.id
+          }')">Concluir</button>
+
+
+            <button class="buttonAVA" data-id="${
+              evaluation.id
+            }" onclick="trocaStatus('EM ESPERA', '${
+            evaluation.id
+          }')">Em espera</button>
+
+
+            <button class="buttonAVA" data-id="${
+              evaluation.id
+            }" onclick="trocaStatus('ANDAMENTO', '${
+            evaluation.id
+          }')">Andamento</button>
+
+
+            <button class="buttonDelete" data-id="${
+              evaluation.id
+            }" onclick="deleteAVA('${evaluation.id}')">Deletar Tarefa</button>
+            </br>
+            </br>
           `;
           evaluationsList.appendChild(evaluationItem);
         });
@@ -151,15 +199,21 @@ document.addEventListener("DOMContentLoaded", () => {
           evaluationItem.classList.add("evaluation-item");
           evaluationItem.classList.add(`id_${evaluation.id}`);
           evaluationItem.innerHTML = `
-          <p><strong class="leftID">ID: ${evaluation.id} </strong></p>
-          <p><strong>Criado por</strong> ${userId.name}</p>
-          <p><strong>Data de Criação:</strong> ${new Date(
-            evaluation.created_at
-          ).toLocaleDateString()}</p>
-          </br>
-          <h3>${evaluation.evaluation_name}</h3>
-          <p><strong>Agendado para </strong>${new Date(evaluation.scheduled_date).toLocaleDateString()}</p>
-          </br>  
+            <p><strong class="leftID">ID: ${evaluation.id} </strong></p>
+            <p><strong>Criado por</strong> ${userId.name}</p>
+            <p><strong>Data de Criação:</strong> ${new Date(
+              evaluation.created_at
+            ).toLocaleDateString()}</p>
+            </br>
+            <h3>${evaluation.evaluation_name}</h3>
+            <p><strong>Agendado para </strong>${new Date(
+              evaluation.scheduled_date
+            ).toLocaleDateString()}</p>
+            </br>
+            
+            <p><strong>Status: ${evaluation.status}</strong></p>
+            </br>
+
             </div>
             <p id="modalEmotionLabel">Funcionários:</p>
             <textarea id="modalAVALabel" readonly>${evaluation.employees_involved.join(
@@ -173,12 +227,37 @@ document.addEventListener("DOMContentLoaded", () => {
             }</textarea>
             </div>
             </br>
-    <button class="buttonAVA" data-id="${evaluation.id}">Enviar Email</button>
-    <button class="buttonDelete" data-id="${
-      evaluation.id
-    }" onclick="deleteAVA('${evaluation.id}')">Deletar Tarefa</button>
-    </br>
-    </br>
+            <button class="buttonAVA" data-id="${
+              evaluation.id
+            }">Enviar Email</button>
+
+
+            <button class="buttonAVA" data-id="${
+              evaluation.id
+            }" onclick="trocaStatus('CONCLUIDO', '${
+            evaluation.id
+          }')">Concluir</button>
+
+
+            <button class="buttonAVA" data-id="${
+              evaluation.id
+            }" onclick="trocaStatus('EM ESPERA', '${
+            evaluation.id
+          }')">Em espera</button>
+
+
+            <button class="buttonAVA" data-id="${
+              evaluation.id
+            }" onclick="trocaStatus('ANDAMENTO', '${
+            evaluation.id
+          }')">Andamento</button>
+
+
+            <button class="buttonDelete" data-id="${
+              evaluation.id
+            }" onclick="deleteAVA('${evaluation.id}')">Deletar Tarefa</button>
+            </br>
+            </br>
           `;
           evaluationsList.appendChild(evaluationItem);
         });

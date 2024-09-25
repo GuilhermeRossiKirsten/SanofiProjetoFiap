@@ -159,12 +159,10 @@ app.post("/evaluations", async (req, res) => {
       [evaluation_name, employees_involved, description, user_id, due_date]
     );
 
-    res
-      .status(201)
-      .json({
-        message: "Avaliação criada com sucesso!",
-        evaluation: result.rows[0],
-      });
+    res.status(201).json({
+      message: "Avaliação criada com sucesso!",
+      evaluation: result.rows[0],
+    });
   } catch (err) {
     console.error("Erro ao criar avaliação:", err.message);
     res.status(500).send("Erro no servidor");
@@ -189,7 +187,6 @@ app.get("/evaluations", async (req, res) => {
   }
 });
 
-// Rota para buscar avaliação pelo nome ou ID do criador
 app.get("/evaluations/search", async (req, res) => {
   const query = req.query.query; // Recebe o parâmetro de busca
 
@@ -245,15 +242,33 @@ app.delete("/evaluations/:id", async (req, res) => {
       return res.status(404).json({ message: "Avaliação não encontrada." });
     }
 
-    res
-      .status(200)
-      .json({
-        message: "Avaliação deletada com sucesso.",
-        deleted: result.rows[0],
-      });
+    res.status(200).json({
+      message: "Avaliação deletada com sucesso.",
+      deleted: result.rows[0],
+    });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Erro no servidor");
+  }
+});
+
+app.post("/evaluations/progresso/:id", async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  try {
+    const result = await pool.query(
+      "UPDATE evaluations SET status = $1 WHERE id = $2",
+      [status, id]
+    );
+
+    if (result.rowCount === 0) {
+      res.status(404).json({ message: "Avaliação não encontrada" });
+    }
+
+    res.status(200).json({ message: `Alterado para ${status}` });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ message: "Erro no servidor" });
   }
 });
 
