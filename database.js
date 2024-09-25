@@ -1,8 +1,7 @@
-import pkg from "pg";
-const { Pool } = pkg;
-import cors from "cors";
-import express from "express";
-import bcrypt from "bcryptjs";
+const { Pool } = require("pg");
+const cors = require("cors");
+const express = require("express");
+const bcrypt = require("bcryptjs");
 
 const app = express();
 const pool = new Pool({
@@ -131,23 +130,41 @@ app.post("/search", async (req, res) => {
 });
 
 app.post("/evaluations", async (req, res) => {
-  const { evaluation_name, employees_involved, description, user_id } =
-    req.body;
+  const {
+    evaluation_name,
+    employees_involved,
+    description,
+    user_id,
+    due_date, // Campo adicionado
+  } = req.body;
 
-  if (!evaluation_name || !employees_involved || !description || !user_id) {
+  // Verifica se todos os campos obrigatórios foram fornecidos
+  if (
+    !evaluation_name ||
+    !employees_involved ||
+    !description ||
+    !user_id ||
+    !due_date
+  ) {
     return res
       .status(400)
       .json({ message: "Todos os campos são obrigatórios." });
   }
 
   try {
+    // Insere a avaliação no banco de dados, incluindo a data prevista
     const result = await pool.query(
-      `INSERT INTO evaluations (evaluation_name, employees_involved, description, user_id) 
-       VALUES ($1, $2, $3, $4) RETURNING *;`,
-      [evaluation_name, employees_involved, description, user_id]
+      `INSERT INTO evaluations (evaluation_name, employees_involved, description, user_id, scheduled_date) 
+       VALUES ($1, $2, $3, $4, $5) RETURNING *;`,
+      [evaluation_name, employees_involved, description, user_id, due_date]
     );
 
-    res.status(201).json({ message: "Avaliação criada com sucesso!" });
+    res
+      .status(201)
+      .json({
+        message: "Avaliação criada com sucesso!",
+        evaluation: result.rows[0],
+      });
   } catch (err) {
     console.error("Erro ao criar avaliação:", err.message);
     res.status(500).send("Erro no servidor");
@@ -157,7 +174,9 @@ app.post("/evaluations", async (req, res) => {
 // Rota para listar todas as avaliações
 app.get("/evaluations", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM evaluations ORDER BY created_at DESC;");
+    const result = await pool.query(
+      "SELECT * FROM evaluations ORDER BY created_at DESC;"
+    );
 
     if (result.rows.length === 0) {
       return res.status(404).json({ message: "Nenhuma avaliação encontrada." });
@@ -169,7 +188,6 @@ app.get("/evaluations", async (req, res) => {
     res.status(500).send("Erro no servidor");
   }
 });
-
 
 // Rota para buscar avaliação pelo nome ou ID do criador
 app.get("/evaluations/search", async (req, res) => {
@@ -193,7 +211,51 @@ app.get("/evaluations/search", async (req, res) => {
   }
 });
 
+app.get("/idUser", async (req, res) => {
+  const { id } = req.query; // Obtém o 'id' dos parâmetros da URL
 
+  if (!id) {
+    return res.status(400).json({ message: "O parâmetro 'id' é necessário." });
+  }
+
+  try {
+    const result = await pool.query(`SELECT * FROM users WHERE id = $1`, [id]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Código não encontrado." });
+    }
+
+    res.json(result.rows[0]); // Retorna o primeiro resultado encontrado
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Erro no servidor");
+  }
+});
+
+app.delete("/evaluations/:id", async (req, res) => {
+  const { id } = req.params; // Obtém o ID da tarefa a ser deletada
+
+  try {
+    const result = await pool.query(
+      "DELETE FROM evaluations WHERE id = $1 ", // Deleta e retorna a linha deletada
+      [id]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: "Avaliação não encontrada." });
+    }
+
+    res
+      .status(200)
+      .json({
+        message: "Avaliação deletada com sucesso.",
+        deleted: result.rows[0],
+      });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Erro no servidor");
+  }
+});
 
 const PORT = 5000;
 app.listen(PORT, () => {

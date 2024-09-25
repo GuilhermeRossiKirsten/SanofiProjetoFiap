@@ -88,7 +88,10 @@
             required
           ></textarea>
 
-          <button type="submit" class="buttonAVA">Criar Avaliação</button>
+          <label for="due_date_unique">Data Prevista:</label>
+          <input type="date" id="due_date_unique" name="due_date" required />
+
+          <button type="submit" class="buttonAVA buttonAVA1">Criar Avaliação</button>
         </form>
       </section>
 
@@ -104,7 +107,7 @@
             placeholder="Digite o termo de busca"
             required
           />
-          <button type="submit" class="buttonAVA">Buscar</button>
+          <button type="submit" class="buttonAVA buttonAVA1">Buscar</button>
         </form>
       </section>
 
@@ -169,6 +172,7 @@
   <script src="assets/scripts/modalChat.js" defer></script>
   <script src="assets/scripts/chatbot.js" defer></script>
   <script src="assets/scripts/avaliacao.js" defer></script>
+  <script src="assets/scripts/deleteAVA.js" defer></script>
   <script src="assets/scripts/email.js" defer></script>
   <script src="https://cdn.emailjs.com/dist/email.min.js" defer></script>
 </html>

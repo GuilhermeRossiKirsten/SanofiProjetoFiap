@@ -41,6 +41,24 @@ textarea {
   padding: 5px 10px;
 }
 
+.buttonAVA1 {
+  float: right;
+}
+
+.buttonDelete {
+  background-color: rgb(198, 21, 21);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+  float: right;
+}
+
+.leftID {
+  float: right;
+}
+
 /* Estilo da lista de avaliações */
 #evaluationsList_unique {
   margin-top: 10px;
@@ -52,4 +70,77 @@ textarea {
   border-radius: 4px;
   margin-bottom: 10px;
   background-color: #ffffff;
+  width: 70vw;
+}
+
+@media (min-width: 700px) {
+
+}
+
+@media (max-width: 320px) {
+  .evaluation-item {
+     width: 78vw;
+  }
+
+  .leftID {
+    float: none;
+  }
+}
+
+/* Container principal que envolve todas as avaliações */
+.evaluations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Espaçamento entre os itens */
+  padding: 20px;
+}
+
+/* Estilização de cada item de avaliação */
+.evaluation-item {
+  border: 1px solid #ccc; /* Borda leve */
+  border-radius: 8px; /* Bordas arredondadas */
+  padding: 15px; /* Espaçamento interno */
+  background-color: #f9f9f9; /* Cor de fundo leve */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Estilização de títulos e textos */
+.evaluation-item h3 {
+  margin: 10px 0; /* Margem em cima e embaixo do título */
+}
+
+.evaluation-item p {
+  margin: 5px 0; /* Margem em cima e embaixo dos parágrafos */
+}
+.buttonAVA:hover,
+.buttonDelete:hover {
+  opacity: 0.9; /* Efeito de hover */
+}
+
+/* Estilização das áreas de texto */
+textarea {
+  width: 100%; /* Ocupa toda a largura */
+  margin: 10px 0; /* Margem em cima e embaixo */
+  border: 1px solid #ccc; /* Borda leve */
+  border-radius: 5px; /* Bordas arredondadas */
+  padding: 10px; /* Espaçamento interno */
+  resize: none; /* Impede o redimensionamento */
+}
+
+/* Media Queries para telas menores */
+@media (max-width: 768px) {
+  .evaluations-list {
+    padding: 10px; /* Menos espaçamento em telas menores */
+  }
+
+  .evaluation-item {
+    padding: 10px; /* Menos padding em telas menores */
+  }
+
+  .buttonAVA,
+  .buttonDelete {
+    width: 100%; /* Botões ocupam 100% da largura */
+    margin-right: 0; /* Remove margem direita em telas menores */
+    margin-bottom: 10px; /* Margem embaixo dos botões */
+  }
 }
