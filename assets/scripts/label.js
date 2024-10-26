@@ -9,7 +9,7 @@ window.onload = function () {
   ]);
 
   // Fazendo a requisição para a API usando fetch
-  fetch("http://localhost:5000/emotion-stats")
+  fetch("https://apisanofi.onrender.com/emotion-stats")
     .then((response) => response.json())
     .then((data) => {
       // Atualizando os pontos de dados com os valores da API
